@@ -1,0 +1,150 @@
+/* Center the content vertically and horizontally */
+.maint {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .text-danger {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+  
+
+  .subt {
+    height: 120px;
+    width: 740px;
+    height: 580px;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    border: 4px solid black;
+    border-radius: 119px;
+    background:url('../../../../pic/FRONT.jpg');
+    
+  }
+
+  h4[type="update"] {
+    width: 55%;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    margin-left: 160px;
+    border-radius: 35px;
+    border: 2px solid white;
+    box-shadow: 2px 2px 2px 2px purple;
+    font-family: 'Nosifer', sans-serif;
+    background:url('../../../../pic/COF.jpg');
+  }
+
+
+  a {
+  font-weight: 500;
+  color: white;
+  text-decoration: inherit;
+  transform: translateY(6);
+  transition: 0.8s;
+ }
+
+ a:hover {
+  font-weight: 500;
+  color: yellow;
+  text-decoration: inherit;
+ }
+
+  Button[type="submit"],
+  Button[type="login"]
+   {
+    font-size: 18px;
+    background-color: transparent;
+    width: 25%;
+    border-radius: 25px;
+    margin: 10px;
+    color: whitesmoke;
+    margin-left: 10px;
+    box-shadow: 5px 4px 4px 4px white;
+    font-family: 'Nosifer', sans-serif;
+    background:url('../../../../pic/COF.jpg');
+    transform: translateY(6);
+    transition: 0.6s;
+
+  }
+  
+  input[type="work11"] 
+  {
+    width: 45%;
+    height: 10%;
+    padding: 10px;
+    margin: 11px;
+    margin-top: 30px;
+    background-color: transparent;
+    border-radius: 10px;
+    border: 3px solid purple;
+    border-radius: 51px;
+    box-shadow: 1px 2px 4px 5px white;
+    background:url('../../../../pic/FRONT.jpg');
+    
+  }
+
+
+
+  input[type="work1"]::placeholder {
+    color: white;
+    font-weight: 300;
+    padding: 16px;
+    
+  }
+
+@media (max-width: 800px) {
+
+
+    .subt {
+      width: 600px;
+      height: 570px;
+      padding: 10px;
+      margin-top: 20px;
+    }
+
+    h4[type="update"] {
+
+      margin-bottom: 40px;
+      width: 65%;
+      margin-left: 105px;
+      border-radius: 35px;
+      border: 3px solid white;
+      box-shadow: 2px 1px 1px 1px blanchedalmond;
+      font-family: 'Nosifer', sans-serif;
+
+    }
+
+  
+
+    input[type="work1"] {
+      padding: 8px;
+      width: 45%;
+    }
+
+    input[type="work1"]::placeholder {
+      color: white;
+      font-weight: 300;
+      padding: 10px;
+      
+    }
+    
+    Button[type="submit"],
+    Button[type="login"] {
+      width: 40%;
+      margin-top: 21px;
+      margin-right: 10px;
+      transition: 0.6s;
+      transform: translateY(6px);
+    }
+
+    Button[type="submit"]:hover,
+    Button[type="login"]:hover {
+      color: orange;
+  
+    }
+    
+  }

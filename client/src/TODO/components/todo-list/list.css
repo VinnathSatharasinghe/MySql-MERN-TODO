@@ -1,0 +1,69 @@
+.mainall {
+    text-align: center;
+    padding: 10px;
+    color: whitesmoke;
+    font-weight: 600;
+    font-size: 20px;
+    font-family:cursive;
+
+  }
+  
+  .navv {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+  }
+  
+  .box1 {
+    width: 90%;
+    padding: 50px;
+    margin-top: 50px;
+    margin-left: 75px;
+    border-radius: 100px;
+    border: 5px solid wheat;
+    background: url('../../../pic/COF.jpg');
+    box-shadow: 2px 4px 5px 6px red ;
+
+  }
+
+
+  .tablex {
+    width: 100%;
+    background-color: black;
+    border-collapse: collapse;
+
+  }
+  
+  .tablex th, .tablex td {
+    border: 4px solid orange;
+    padding: 10px;
+    box-shadow: 2px 2px 6px 1px whitesmoke;
+  }
+  
+  .tablex th {
+    padding: 20px;
+    color: whitesmoke;
+    background:url('../pic/rfr.jpg');
+  }
+
+  @media(max-width:800px) {
+
+
+    .box1 {
+      width: 620px;
+      height: 630px;
+      padding: 30px;
+      margin-left: 60px;
+      margin-top: 30px;
+      border-radius: 100px;
+      border: 5px solid wheat;
+      background: url('../../../pic/COF.jpg');
+      box-shadow: 4px 4px 2px 2px black ;
+  
+    }
+
+  }
+
+
+
+  

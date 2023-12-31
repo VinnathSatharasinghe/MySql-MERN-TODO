@@ -1,0 +1,215 @@
+@import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+  }
+  
+  
+  .home-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    
+ 
+  }
+  
+  header {
+    background-color: black;
+    border-radius: 20%;
+    padding: -41px 0px 51px 0px;
+    margin-bottom: 35px;
+    background: url('../../pic/1325726.png');
+    border: 6px solid black;
+    box-shadow: 1px 2px 11px 6px white;
+    
+  }    
+ 
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+  }
+  
+  nav li {
+    margin: 0 15px;
+    
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    
+  }
+
+  
+  
+  main {
+    background: url('../../pic/FRONT.jpg');
+    padding: 20px;
+    border: 6px solid black;
+    box-shadow: 1px 6px 16px 3px white;
+  }
+  
+  .hero {
+    text-align: center;
+    padding: 40px 0;
+    font-family: 'Nosifer', sans-serif;
+    border: 6px solid black;
+    box-shadow: 1px 2px 11px 6px white;
+    font-family: 'Nosifer', sans-serif;
+    background: url('../../pic/FRONT.jpg');
+  }
+  
+  .hero h1 {
+    color: white;
+    font-weight: 300;
+    font-size: 1.9rem;
+    margin-bottom: 10px;
+    font-family: 'Nosifer', sans-serif;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 20px;
+    font-family: 'Nosifer', sans-serif;
+
+  }
+
+  .home-btn {
+    padding: 8px 10px;
+    position: inherit;
+    padding-bottom: 11px;
+    border-radius: 11px;
+    transition: 0.8s all ease;
+    cursor: pointer;
+    font-family: 'Nosifer', sans-serif;
+    background: url('../../pic/1325726.png');
+    box-shadow: 5px 4px 6px white, 15px 11px 6px black;
+
+}
+
+.home-btn:hover{
+    transform: translateY(-5px);
+    
+}
+header ul li a:hover {
+  color: darkgoldenrod;
+  
+} 
+  
+  .features {
+    display: flex;
+    color: white;
+    margin: 70px 0;
+    font-weight: 600;
+    justify-content: space-around;
+    margin: 50px;
+  }
+  
+  .feature {
+    text-align: center;
+    border-radius: 11px;
+    padding: 20px;
+    border: 4px solid black;
+    box-shadow: 3px 2px 6px 4px white;
+    margin: 10px;
+    background: url('../../pic/1325726.png');
+    
+  }
+  
+  .feature h2 {
+    font-size: 1.7rem;
+    margin-bottom: 10px;
+  }
+  
+  footer {
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+    font-family: 'Nosifer', sans-serif;
+    box-shadow: 2px 4px 7px 5px white;
+    background: url('../../pic/1325726.png');
+    
+  }
+
+
+  /* -------------------------------- */
+
+
+header{
+    height: 10vh;
+    line-height: 10vh;
+    font-weight: 500;
+    letter-spacing: 10px;
+    
+}
+
+header .container {
+    padding-top: 15px;
+
+}
+header ul li{
+    margin-left: 45px;
+    margin-top: -15px;
+}
+header ul li a{
+    transition: 0.5s;
+    font-size: 13px;
+    font-weight: 300;
+    letter-spacing: 3px;
+  
+}
+
+
+@media (max-width: 800px) {
+
+    header ul {
+        padding: 30px;
+        
+    }
+    .nav-links-mobile {
+        position: absolute;
+        display: block;
+        list-style: none;
+        box-shadow: black 0 20px 100px -60px, black 0 30px 60px -30px;
+        left: 0;
+        top: 0;
+        transition: all 0.5s ease-in-out;
+        width: 60%;
+        height: 100vh;
+        background-color: lightpink;   
+         
+    
+    }
+    header ul li {
+        width: 100%;
+        margin-top: -45px;
+        margin-left: 5px;
+        transition: 0.5s;
+        text-transform: uppercase;
+        
+        
+    }
+
+    .feature {
+      text-align: center;
+      padding: 20px;
+      border: 4px solid black;
+      box-shadow: 3px 2px 6px 4px white;
+      margin-right: 25px;
+      border-radius: 11px;
+      background: url('../../pic/1325726.png');
+      
+    }
+
+
+}
+
