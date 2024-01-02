@@ -260,8 +260,8 @@ app.post("/login", async (req, res) => {
 
 // Delete query
 
-app.delete("/deleteuser/:uid", (req, res) => {
-  const userId = req.params.uid;
+app.delete("/deleteuser/:id", (req, res) => {
+  const userId = req.params.id;
 
   // Check if the userId is provided
   if (!userId) {
@@ -271,6 +271,35 @@ app.delete("/deleteuser/:uid", (req, res) => {
   // Sample query to delete a user by ID
   const deleteUserQuery = "DELETE FROM USER WHERE uid = ?";
   db.query(deleteUserQuery, [userId], (error, result) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    // Check if any user was deleted
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ message: "User deleted successfully" });
+  });
+});
+
+
+
+// Delete todo query
+
+app.delete("/deletetodo/:id", (req, res) => {
+  const todoId = req.params.id;
+
+  // Check if the userId is provided
+  if (!todoId) {
+    return res.status(400).json({ error: "User ID is required" });
+  }
+
+  // Sample query to delete a user by ID
+  const deleteTodoQuery = "DELETE FROM todo WHERE tid = ?";
+  db.query(deleteTodoQuery, [todoId], (error, result) => {
     if (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal Server Error" });

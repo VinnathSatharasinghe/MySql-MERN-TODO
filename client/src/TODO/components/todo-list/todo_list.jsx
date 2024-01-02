@@ -9,7 +9,7 @@ function TodoList() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/viewtask")
+      .get("http://localhost:3000/view/todo")
       .then((response) => {
         setTodos(response.data);
       })
@@ -20,8 +20,8 @@ function TodoList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/deletetask/${id}`);
-      const updatedTodos = todos.filter((todo) => todo._id !== id);
+      await axios.delete(`http://localhost:3000/deletetodo/${id}`);
+      const updatedTodos = todos.filter((todo) => todo.tid !== id);
       setTodos(updatedTodos);
       console.error("OK:");
     } catch (error) {
@@ -50,12 +50,12 @@ function TodoList() {
                   <td>{todo.title}</td>
                   <td>{todo.body}</td>
                   <td>
-                    <Link to={`/update/task/${todo._id}`} className="btnx1">
+                    <Link to={`/update/task/${todo.tid}`} className="btnx1">
                       Edit
                     </Link>
                     <br />
                     <button
-                      onClick={() => handleDelete(todo._id)}
+                      onClick={() => handleDelete(todo.tid)}
                       className="btnx1"
                     >
                       Delete
