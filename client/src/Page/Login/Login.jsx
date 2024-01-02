@@ -19,7 +19,7 @@ function Login() {
     axios
       .post("http://localhost:3000/login", { name, password })
       .then((result) => {
-        console.log(result);
+        // console.log(result);
 
         if (result.data.message == "User not found") {
           toast.error("Login Failed. No User existed.", { autoClose: 5000 });
@@ -29,8 +29,8 @@ function Login() {
           navigate("/todo", {
             state: {
               name: result.data.name,
-              email: result.data.email,
-              id: result.data.uid,
+              password: result.data.password,
+              uid: result.data.uid,
             },
           });
         } else if (result.data.message == "Incorrect password") {

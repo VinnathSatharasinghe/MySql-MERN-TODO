@@ -14,11 +14,12 @@ import "../Todo_Main/todo_.css";
 function todo() {
   const location = useLocation();
   const { name } = location.state;
-  const { id } = location.state;
+  const { password } = location.state;
+  const { uid } = location.state;
 
   const [body, setBody] = useState();
   const [title, setTitle] = useState();
-  const [todos, setTodos] = useState([]);
+  const [users, setUser] = useState([]);
 
   // const navigate = useNavigate();
 
@@ -37,7 +38,7 @@ function todo() {
     } else {
       if (Object.values(newErrors).every((error) => error === "")) {
         axios
-          .post("http://localhost:3001/addtask", { name, title, body })
+          .post("http://localhost:3000/todo/add", { uid, title, body })
           .then((result) => {
             console.log(result);
             toast.success("Todo Successfully Added!");
@@ -54,26 +55,41 @@ function todo() {
   useEffect(() => {
     // Fetch todo list data including user information
     axios
-      .get(`http://localhost:3000/view/${id}`)
+      .get(`http://localhost:3000/todoo/${uid}`)
       .then((response) => {
-        setTodos(response.data.list);
+        setUser(response.data);
       })
       .catch((error) => {
         console.error("Error fetching todo list:", error);
       });
-  }, [id]);
+  }, [uid]);
 
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:3001/deletetask/${id}`);
-      const updatedTodos = todos.filter((todo) => todo._id !== id);
-      setTodos(updatedTodos);
-      console.error("OK:");
-    } catch (error) {
-      console.error("Error deleting task:", error);
-    }
-  };
+  // useEffect(() => {
+  //   // Fetch todo list data including user information
+  //   axios
+  //     .get(`http://localhost:3000/view`)
+  //     .then((response) => {
+  //       setUser(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching todo list:", error);
+  //     });
+  // }, [uid]);
+
+
+
+
+  // const handleDelete = async (uid) => {
+  //   try {
+  //     await axios.delete(`http://localhost:3001/deletetask/${uid}`);
+  //     const updatedTodos = todos.filter((todo) => todo._id !== id);
+  //     setTodos(updatedTodos);
+  //     console.error("OK:");
+  //   } catch (error) {
+  //     console.error("Error deleting task:", error);
+  //   }
+  // };
 
   return (
     <div>
@@ -83,6 +99,18 @@ function todo() {
           <Form onSubmit={handleSubmit}>
             <h4 type="todo">Hi {name}</h4>
             <Form.Group className="mb-3" controlId="formBasicUsername">
+              <Form.Label>UID :</Form.Label>
+
+              <input
+                type="work1"
+                placeholder=""
+                autoComplete="off"
+                name="name"
+                defaultValue={uid}
+                disabled
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicUsername">
               <Form.Label>NAME :</Form.Label>
 
               <input
@@ -90,20 +118,34 @@ function todo() {
                 placeholder=""
                 autoComplete="off"
                 name="name"
-                defaultValue={name}
+                value={name}
                 disabled
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicUsername">
-              <Form.Label>U-ID :</Form.Label>
+              <Form.Label>PASSWORD :</Form.Label>
 
               <input
                 type="work1"
                 placeholder=""
                 autoComplete="off"
                 name="name"
-                defaultValue={id}
+                value={password}
                 disabled
+              />
+            </Form.Group>
+
+            <h4 type="todo">{name}'S new TODO</h4>
+
+            <Form.Group className="mb-3" controlId="formBasicUsername">
+              <Form.Label>UID :</Form.Label>
+
+              <input
+                type="work1"
+                placeholder=""
+                autoComplete="off"
+                name="name"
+                value={uid}
               />
             </Form.Group>
 
@@ -152,16 +194,25 @@ function todo() {
             pauseOnHover
             theme="dark"
           />
-
         </div>
       </div>
 
       <br />
-
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
 
       <div className="mainall">
         <div className="box1">
-          <h3>{name}'s -  Todo</h3>
+          <h3>{name}'s - Todo</h3>
           <br />
           <table className="tablex">
             <thead>
@@ -172,23 +223,21 @@ function todo() {
               </tr>
             </thead>
             <tbody>
-            {todos.map((todo) => (
-                <tr key={todo._id}>
-                  <td>{todo.title}</td>
-                  <td>{todo.body}</td>
+              {users.map((user) => (
+                <tr key={user.uid}>
+                  <td>{user.title}</td>
+                  <td>{user.body}</td>
                   <td>
-                   
-                  <Link to={`/update/task/${todo._id}`} className="btnx1">
+                    <Link to={`/update/task/${todo.uid}`} className="btnx1">
                       Edit
                     </Link>
                     <br />
                     <button
-                      onClick={() => handleDelete(todo._id)}
+                      onClick={() => handleDelete(todo.uid)}
                       className="btnx1"
                     >
                       Delete
                     </button>
-
                   </td>
                 </tr>
               ))}
