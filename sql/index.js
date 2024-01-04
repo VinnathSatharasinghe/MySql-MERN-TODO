@@ -40,7 +40,7 @@ app.get("/view/todo", (req, res) => {
 
 // user by uid
 
-app.get("/view/:uid", (req, res) => {
+app.get("/view/:id", (req, res) => {
   const userId = req.params.id;
 
   // Check if the userId is provided
@@ -62,74 +62,175 @@ app.get("/view/:uid", (req, res) => {
     }
 
     res.json(results[0]); // Assuming you want to return the first user found
-    console.log(results);
   });
 });
-
-
-
 
 // user by tid
 
-app.get("/todoo/:uid", (req, res) => {
+// app.get("/todoo/:id", (req, res) => {
+//   const userId = req.params.id;
+
+//   // Check if the userId is provided
+//   if (!userId) {
+//     return res.status(400).json({ error: "User ID is required" });
+//   }
+
+//   // Sample query to fetch a user by ID
+//   const getUserQuery = "SELECT * FROM todo WHERE uid = ?";
+//   db.query(getUserQuery, [userId], (error, results) => {
+//     if (error) {
+//       console.error(error);
+//       return res.status(500).json({ error: "Internal Server Error" });
+//     }
+
+//     // Check if any user was found
+//     if (results.length === 0) {
+//       return res.status(404).json({ error: "User not found viewid" });
+//     }
+
+//     res.json(results); // Assuming you want to return the first user found
+//     console.log(results);
+//   });
+// });
+
+
+
+
+
+app.put("/user/update/:id", (req, res) => {
   const userId = req.params.id;
 
-  // Check if the userId is provided
   if (!userId) {
-    return res.status(400).json({ error: "User ID is required" });
+    return res.status(400).json({ error: "User ID is required" }),
+    console.log("nooooo");
   }
+  
+  const { name, email } = req.body;
+  const updateUserQuery = "UPDATE user SET name = ?, email = ? WHERE uid = ?";
+  db.query(updateUserQuery, [name, email, userId], (error, result) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+    // Check if any user was updated
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "User not found" }),
+      console.log("user not found");
+    }
+    res.json({ message: "User updated successfully" });
+  });
+});
 
-  // Sample query to fetch a user by ID
-  const getUserQuery = "SELECT * FROM todo WHERE uid = ?";
-  db.query(getUserQuery, [userId], (error, results) => {
+// Your add todo
+
+app.post("/todo/add", async (req, res) => {
+  try {
+    const { uid, title, body } = req.body;
+
+    // Insert user into the database
+    const insertTodoQuery =
+      "INSERT INTO todo (uid, title, body) VALUES (?, ?, ?)";
+    db.query(insertTodoQuery, [uid, title, body], (err, result) => {
+      if (err) {
+        console.error("Error inserting user into the database:", err);
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
+      console.log("User todo added successfully");
+      res.status(201).json({ message: "Todo successfully" });
+    });
+  } catch (error) {
+    console.error("Error during registration:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Function to check if a user with the given username or email already exists
+// function checkUserExists(title) {
+//   return new Promise((resolve, reject) => {
+//     const checkUserQuery = "SELECT * FROM todo WHERE title = ?";
+//     db.query(checkUserQuery, [title], (err, result) => {
+//       if (err) {
+//         console.error("Error checking user existence:", err);
+//         reject(err);
+//       } else {
+//         resolve(result.length > 0);
+//       }
+//     });
+//   });
+// }
+
+// Delete query
+
+app.delete("/deleteuser/:id", (req, res) => {
+  const userId = req.params.id;
+
+  const checkTodosQuery = "SELECT * FROM todo WHERE uid = ?";
+  db.query(checkTodosQuery, [userId], (error, result) => {
     if (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
 
-    // Check if any user was found
-    if (results.length === 0) {
-      return res.status(404).json({ error: "User not found viewid" });
-    }
+    // If there are todos associated with the user, delete todos first
+    if (result.length > 0) {
+      const deleteTodoQuery = "DELETE FROM todo WHERE uid = ?";
+      db.query(deleteTodoQuery, [userId], (error, result) => {
+        if (error) {
+          console.error(error);
+          return res.status(500).json({ error: "Internal Server Error" });
+        }
 
-    res.json(results); // Assuming you want to return the first user found
-    console.log(results);
+        // Check if any user was deleted
+        if (result.affectedRows == 0) {
+          return res.status(404).json({ error: "User not found" });
+        }
+
+        return res.json({ message: "Todo deleted successfully" });
+      });
+    } else {
+      // No associated todos, proceed with user deletion
+      const deleteUserQuery = "DELETE FROM user WHERE uid = ?";
+      db.query(deleteUserQuery, [userId], (error, result) => {
+        if (error) {
+          console.error(error);
+          return res.status(500).json({ error: "Internal Server Error" });
+        }
+
+        // Check if any user was deleted
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ error: "User not found" });
+        }
+
+        return res.json({ message: "User deleted successfully" });
+      });
+    }
   });
 });
 
 
+// Delete todo query
 
+app.delete("/deletetodo/:id", (req, res) => {
+  const todoId = req.params.id;
 
-
-
-
-
-
-
-app.put("/update/user/:id", (req, res) => {
-  const userId = req.params.id;
-
-  // Check if the userId is provided
-  if (!userId) {
+  if (!todoId) {
     return res.status(400).json({ error: "User ID is required" });
   }
 
-  const { name, email } = req.body;
-
-  // Sample query to update user details by ID
-  const updateUserQuery = "UPDATE user SET name = ?, email = ? WHERE uid = ?";
-  db.query(updateUserQuery, [name, email, userId], (error, result) => {
+  // Sample query to delete a user by ID
+  const deleteTodoQuery = "DELETE FROM todo WHERE tid = ?";
+  db.query(deleteTodoQuery, [todoId], (error, result) => {
     if (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
 
-    // Check if any user was updated
+    // Check if any user was deleted
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    res.json({ message: "User updated successfully" });
+    res.json({ message: "User deleted successfully" });
   });
 });
 
@@ -176,48 +277,6 @@ function checkUserExists(name, email) {
     });
   });
 }
-
-// Your add todo
-
-app.post("/todo/add", async (req, res) => {
-  try {
-    const {uid, title, body } = req.body;
-
-
-    // Insert user into the database
-    const insertTodoQuery =
-      "INSERT INTO todo (uid, title, body) VALUES (?, ?, ?)";
-    db.query(insertTodoQuery, [uid, title, body], (err, result) => {
-      if (err) {
-        console.error("Error inserting user into the database:", err);
-        return res.status(500).json({ error: "Internal Server Error" });
-      }
-      console.log("User todo added successfully");
-      console.log(result);
-      res.status(201).json({ message: "Todo successfully" });
-    });
-  } catch (error) {
-    console.error("Error during registration:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-// Function to check if a user with the given username or email already exists
-// function checkUserExists(title) {
-//   return new Promise((resolve, reject) => {
-//     const checkUserQuery = "SELECT * FROM todo WHERE title = ?";
-//     db.query(checkUserQuery, [title], (err, result) => {
-//       if (err) {
-//         console.error("Error checking user existence:", err);
-//         reject(err);
-//       } else {
-//         resolve(result.length > 0);
-//       }
-//     });
-//   });
-// }
-
-// Login route without password
 
 app.post("/login", async (req, res) => {
   try {
@@ -284,8 +343,6 @@ app.delete("/deleteuser/:id", (req, res) => {
     res.json({ message: "User deleted successfully" });
   });
 });
-
-
 
 // Delete todo query
 

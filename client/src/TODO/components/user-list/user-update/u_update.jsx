@@ -10,6 +10,7 @@ import Nav from "../../../../Page/Navbar/Navbar";
 import "./uupdate.css";
 
 function EditUser() {
+  
   const { id } = useParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -27,17 +28,19 @@ function EditUser() {
       });
   }, []); // Include id in the dependency array
 
-  const handleUpdate = async (e) => {
+
+
+  const handleUpdategg = async (e) => {
     e.preventDefault(); // Prevents the default form submission behavior
     try {
-      await axios.put(`http://localhost:3000/update/user/${id}`, {
+      await axios.put(`http://localhost:3000/user/update/${id}`, {
         name: name,
         email: email,
       });
-      toast.success("Update successful!", { autoClose: 5000 });
+      toast.success("Update successful!", { autoClose: 3000 });
       console.log("User updated successfully!");
     } catch (error) {
-      toast.error("Update UNsuccessful!", { autoClose: 5000 });
+      toast.error("Update UNsuccessful!", { autoClose: 3000 });
       console.error("Error updating user:", error);
     }
   };
@@ -47,14 +50,14 @@ function EditUser() {
       <Nav />
       <div className="mainu">
         <div className="subu">
-          <Form onSubmit={ handleUpdate}>
+          <Form onSubmit={handleUpdategg}>
             <h4 type="uupdate">Edit User</h4>
             <label>ID</label>
             <br />
             <input 
               type="text"
               value={id}
-              readOnly // Make the ID field read-only
+        
             />
             <br />
             <label>Name</label>
@@ -76,7 +79,7 @@ function EditUser() {
             <br />
             <br />
             <Button type="submit">
-              <a href="/user">User-Table</a>
+              <a href="">User-Table</a>
             </Button>
           </Form>
 

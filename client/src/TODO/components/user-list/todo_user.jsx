@@ -48,7 +48,7 @@ function TodoList() {
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user.id}>
+                <tr key={user.uid}>
                   <td>{user.uid}</td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
