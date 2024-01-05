@@ -16,9 +16,9 @@ function EditTask() {
   // Fetch the task data based on the ID
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/viewtaskone/${id}`)
+      .get(`http://localhost:3000/todoo/${id}`)
       .then((response) => {
-        const list = response.data.list[0]; // Assuming there's only one task
+        const list = response.data[0]; // Assuming there's only one task
         setTitle(list.title);
         setBody(list.body);
       })
@@ -30,7 +30,7 @@ function EditTask() {
   const handleEdit = async (e) => {
     e.preventDefault(); // Prevents the default form submission behavior
     try {
-      await axios.put(`http://localhost:3001/update_task/${id}`, {
+      await axios.put(`http://localhost:3000/update/todo/${id}`, {
         title: title,
         body: body,
       });

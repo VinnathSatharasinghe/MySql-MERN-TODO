@@ -19,7 +19,7 @@ function todo() {
 
   const [body, setBody] = useState();
   const [title, setTitle] = useState();
-  const [users, setUser] = useState([]);
+  const [todos, setTodos] = useState([]);
 
   // const navigate = useNavigate();
 
@@ -52,25 +52,11 @@ function todo() {
     }
   };
 
-  useEffect(() => {
-    // Fetch todo list data including user information
-    axios
-      .get(`http://localhost:3000/todoo/${uid}`)
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching todo list:", error);
-      });
-  }, [uid]);
-
-
   // useEffect(() => {
-  //   // Fetch todo list data including user information
   //   axios
-  //     .get(`http://localhost:3000/view`)
+  //     .get(`http://localhost:3000/todoo/${uid}`)
   //     .then((response) => {
-  //       setUser(response.data);
+  //       setTodos(response.data);
   //     })
   //     .catch((error) => {
   //       console.error("Error fetching todo list:", error);
@@ -78,18 +64,31 @@ function todo() {
   // }, [uid]);
 
 
+  useEffect(() => {
+    // Fetch todo list data including user information
+    axios
+      .get(`http://localhost:3000/todo/uid/${uid}`)
+      .then((response) => {
+        setTodos(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching todo list:", error);
+      });
+  }, [uid]);
 
 
-  // const handleDelete = async (uid) => {
-  //   try {
-  //     await axios.delete(`http://localhost:3001/deletetask/${uid}`);
-  //     const updatedTodos = todos.filter((todo) => todo._id !== id);
-  //     setTodos(updatedTodos);
-  //     console.error("OK:");
-  //   } catch (error) {
-  //     console.error("Error deleting task:", error);
-  //   }
-  // };
+
+
+  const handleDelete = async (uid) => {
+    try {
+      await axios.delete(`http://localhost:3000/deletetodo/${uid}`);
+      const updatedTodos = todos.filter((todo => todo.uid !== id));
+      setTodos(updatedTodos);
+      console.error("OK:");
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
+  };
 
   return (
     <div>
@@ -99,7 +98,8 @@ function todo() {
           <Form onSubmit={handleSubmit}>
             <h4 type="todo">Hi {name}</h4>
             <Form.Group className="mb-3" controlId="formBasicUsername">
-              <Form.Label>UID :</Form.Label>
+              <Form.Label>User ID</Form.Label>
+              <br />
 
               <input
                 type="work1"
@@ -110,8 +110,10 @@ function todo() {
                 disabled
               />
             </Form.Group>
+            <br />
             <Form.Group className="mb-3" controlId="formBasicUsername">
-              <Form.Label>NAME :</Form.Label>
+              <Form.Label>NAME</Form.Label>
+              <br />
 
               <input
                 type="work1"
@@ -122,8 +124,10 @@ function todo() {
                 disabled
               />
             </Form.Group>
+            <br />
             <Form.Group className="mb-3" controlId="formBasicUsername">
-              <Form.Label>PASSWORD :</Form.Label>
+              <Form.Label>PASSWORD</Form.Label>
+              <br />
 
               <input
                 type="work1"
@@ -136,9 +140,11 @@ function todo() {
             </Form.Group>
 
             <h4 type="todo">{name}'S new TODO</h4>
+            <br />
 
             <Form.Group className="mb-3" controlId="formBasicUsername">
-              <Form.Label>UID :</Form.Label>
+              <Form.Label>User ID </Form.Label>
+              <br />
 
               <input
                 type="work1"
@@ -150,7 +156,9 @@ function todo() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicTodo">
-              <Form.Label>TASK :</Form.Label>
+              <Form.Label>TASK</Form.Label>
+              <br />
+            
               <input
                 id="title"
                 type="work1"
@@ -164,7 +172,8 @@ function todo() {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicTodo">
-              <Form.Label>BODY :</Form.Label>
+              <Form.Label>BODY</Form.Label>
+              <br />
               <input
                 id="body"
                 type="work1"
@@ -209,6 +218,11 @@ function todo() {
       <br />
       <br />
       <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
 
       <div className="mainall">
         <div className="box1">
@@ -223,10 +237,10 @@ function todo() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <tr key={user.uid}>
-                  <td>{user.title}</td>
-                  <td>{user.body}</td>
+              {todos.map((todo) => (
+                <tr key={todo.uid}>
+                  <td>{todo.title}</td>
+                  <td>{todo.body}</td>
                   <td>
                     <Link to={`/update/task/${todo.uid}`} className="btnx1">
                       Edit

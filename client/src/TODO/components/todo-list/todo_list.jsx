@@ -39,6 +39,8 @@ function TodoList() {
           <table className="tablex">
             <thead>
               <tr className="test">
+              <th>Todo id</th>
+                <th>User id</th>
                 <th>Todo Title</th>
                 <th>Todo Body</th>
                 <th></th>
@@ -47,6 +49,8 @@ function TodoList() {
             <tbody>
               {todos.map((todo) => (
                 <tr key={todo._id}>
+                     <td>{todo.tid}</td>
+                  <td>{todo.uid}</td>
                   <td>{todo.title}</td>
                   <td>{todo.body}</td>
                   <td>

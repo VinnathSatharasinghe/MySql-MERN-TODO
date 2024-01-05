@@ -61,43 +61,92 @@ app.get("/view/:id", (req, res) => {
       return res.status(404).json({ error: "User not found viewid" });
     }
 
-    res.json(results[0]); // Assuming you want to return the first user found
+    res.json(results); // Assuming you want to return the first user found
   });
 });
 
-// user by tid
+//todo by tid
 
-// app.get("/todoo/:id", (req, res) => {
-//   const userId = req.params.id;
+app.get("/todoo/:id", (req, res) => {
+  const todoId = req.params.id;
 
-//   // Check if the userId is provided
-//   if (!userId) {
-//     return res.status(400).json({ error: "User ID is required" });
-//   }
-
-//   // Sample query to fetch a user by ID
-//   const getUserQuery = "SELECT * FROM todo WHERE uid = ?";
-//   db.query(getUserQuery, [userId], (error, results) => {
-//     if (error) {
-//       console.error(error);
-//       return res.status(500).json({ error: "Internal Server Error" });
-//     }
-
-//     // Check if any user was found
-//     if (results.length === 0) {
-//       return res.status(404).json({ error: "User not found viewid" });
-//     }
-
-//     res.json(results); // Assuming you want to return the first user found
-//     console.log(results);
-//   });
-// });
+  if (!todoId) {
+    return res.status(400).json({ error: "User ID is required" });
+  }
+  const getUserQuery = "SELECT * FROM todo WHERE tid = ?";
+  db.query(getUserQuery, [todoId], (error, results) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: "User not found viewid" });
+    }
+    res.json(results); // Assuming you want to return the first user found
+    console.log(results);
+  });
+});
 
 
 
+//todo by uid
+
+app.get("/todo/uid/:id", (req, res) => {
+  const todoId = req.params.id;
+
+  if (!todoId) {
+    return res.status(400).json({ error: "User ID is required" });
+  }
+  const getUserQuery = "SELECT * FROM todo WHERE uid = ?";
+  db.query(getUserQuery, [todoId], (error, results) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: "User not found viewid" });
+    }
+    res.json(results); // Assuming you want to return the first user found
+    console.log(results);
+  });
+});
 
 
-app.put("/user/update/:id", (req, res) => {
+
+// updateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+
+app.put("/update/todo/:id", (req, res) => {
+  const todoId = req.params.id;
+
+  // Check if the todoId is provided
+  if (!todoId) {
+    return res.status(400).json({ error: "Todo ID is required" });
+  }
+
+  const { title, body } = req.body;
+
+  // Sample query to update a todo by ID
+  const updateTodoQuery = "UPDATE todo SET title = ?, body = ? WHERE tid = ?";
+  db.query(updateTodoQuery, [title, body, todoId], (error, result) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+
+    // Check if any todo was updated
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Todo not found for update" });
+    }
+
+    res.json({ message: "Todo updated successfully" });
+  });
+});
+
+
+
+
+
+app.put("/update/user/:id", (req, res) => {
   const userId = req.params.id;
 
   if (!userId) {
@@ -112,7 +161,7 @@ app.put("/user/update/:id", (req, res) => {
       console.log(error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
-    // Check if any user was updated
+
     if (result.affectedRows === 0) {
       return res.status(404).json({ error: "User not found" }),
       console.log("user not found");

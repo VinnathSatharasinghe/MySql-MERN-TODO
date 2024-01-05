@@ -10,38 +10,35 @@ import Nav from "../../../../Page/Navbar/Navbar";
 import "./uupdate.css";
 
 function EditUser() {
-  
   const { id } = useParams();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
+  // Fetch the task data based on the ID
   useEffect(() => {
     axios
       .get(`http://localhost:3000/view/${id}`)
       .then((response) => {
-        const user = response.data; // Assuming the server returns user details directly
+        const user = response.data[0]; // Assuming there's only one task
         setName(user.name);
         setEmail(user.email);
       })
       .catch((error) => {
-        console.error("Error fetching user details:", error);
+        console.error("Error fetching task details:", error);
       });
-  }, []); // Include id in the dependency array
+  }, []);
 
-
-
-  const handleUpdategg = async (e) => {
+  const handleUp = async (e) => {
     e.preventDefault(); // Prevents the default form submission behavior
     try {
-      await axios.put(`http://localhost:3000/user/update/${id}`, {
+      await axios.put(`http://localhost:3000/update/user/${id}`, {
         name: name,
         email: email,
       });
-      toast.success("Update successful!", { autoClose: 3000 });
-      console.log("User updated successfully!");
+      toast.success("Update successful!", { autoClose: 5000 });
+      console.log("Task updated successfully!");
     } catch (error) {
-      toast.error("Update UNsuccessful!", { autoClose: 3000 });
-      console.error("Error updating user:", error);
+      toast.error("Update unsuccessful!", { autoClose: 5000 });
     }
   };
 
@@ -50,19 +47,17 @@ function EditUser() {
       <Nav />
       <div className="mainu">
         <div className="subu">
-          <Form onSubmit={handleUpdategg}>
+          <Form onSubmit={handleUp}>
             <h4 type="uupdate">Edit User</h4>
             <label>ID</label>
             <br />
-            <input 
-              type="text"
-              value={id}
-        
-            />
+            <input type="text" value={id} />
             <br />
             <label>Name</label>
             <br />
             <input
+              id="name"
+              name="name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -71,6 +66,8 @@ function EditUser() {
             <label>Email</label>
             <br />
             <input
+              id="email"
+              name="email"
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -78,9 +75,10 @@ function EditUser() {
 
             <br />
             <br />
-            <Button type="submit">
+            {/* <Button type="submit">
               <a href="">User-Table</a>
-            </Button>
+            </Button> */}
+           <Button type="submit">Save Changes</Button>
           </Form>
 
           <ToastContainer
@@ -102,33 +100,6 @@ function EditUser() {
 }
 
 export default EditUser;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Import necessary dependencies
 // import Button from "react-bootstrap/Button";
@@ -183,7 +154,7 @@ export default EditUser;
 //             <h4 type="uupdate">Edit User</h4>
 //             <label>ID</label>
 //             <br />
-//             <input 
+//             <input
 //             type="work111"
 //             value={id} />
 //             <br />
